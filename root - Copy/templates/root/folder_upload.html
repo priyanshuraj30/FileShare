@@ -1,0 +1,47 @@
+{% extends "root/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="formcontainer">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Upload Folder</h2>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display:none">
+          <input type="text" id="path" name="path">
+        </div>
+        <p><label for="id_file">File:   </label>
+        <input id="id_file" type="file" name="file" multiple webkitdirectory="" onchange="myFunction()" required /></p>
+        <button type="submit" class="btn btn-success">Submit</button>
+    
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{%block script%}
+
+<script>
+  function myFunction(){
+    var x = document.getElementById("path");
+    var y = document.getElementById("id_file");
+    var txt = "";
+    if ('files' in y) {
+      for (var i = 0; i < y.files.length; i++) {
+        var file = y.files[i];
+        if ('webkitRelativePath' in file) {
+          txt = txt + file.webkitRelativePath + ",";
+        }
+      }
+    }
+    x.value = txt
+  }
+</script>
+
+{%endblock script%}

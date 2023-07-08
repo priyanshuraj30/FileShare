@@ -1,0 +1,18 @@
+{% extends "root/base.html" %} 
+{% block content %}
+<div class="user-card-container">
+  {% for user in users %}
+  <div class="card" style="margin: 0%; margin-bottom: 5%; ">
+    <div class="card-body">
+      <div class="media">
+        <img class="account-img" src="{{user.profile.image.url}}">
+        <div class="media-body">
+          <h2 class="account-heading"> <a href="{%url 'user_repo' user.id%}"> {{user.username}} </a></h2>
+          <p class="text-secondary">{{user.email}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

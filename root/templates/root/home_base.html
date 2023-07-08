@@ -1,0 +1,118 @@
+{% extends "root/base.html" %}
+{% load crispy_forms_tags %}
+{% load custom_filters %}
+
+{% block content %}
+
+
+
+
+
+
+
+<!-- Files Section -->
+<h2 class="section-title">
+    <i class="fa-solid fa-file" style="font-size: 30px; margin-right: 7px;"></i>
+    <span style="font-size: 30px;">Files</span></h2>
+<hr class="section-line">
+<div class="file-section">
+  {% for post in files %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" 
+    src="{{ post.author.profile.image.url }}" />
+    <div class="media-body">
+
+        <a class="article-title" href="{% url 'subfolder' post.id %}"
+         style="text-decoration: none; color: #333; display: flex; flex-direction: column; align-items: center;">
+         <i class="fa-solid fa-file fa-10x" style="color: #60b5e7;"></i>
+            <h4 style="margin-top: 5px;">{{ post.title }}</h4>
+          </a>
+
+          <div class="button-row">
+            <form action="{% url 'delete_file' post.pk %}" method="POST" class=" square button" style="padding: 0%;">
+              {% csrf_token %}
+              {% if request.user == post.owner %}
+                <button type="submit" class="btn btn-danger square button" style="height: 40px">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              {% endif %}
+            </form>
+          
+            <a href="{% url 'download_file' post.file.path %}" class="btn btn-primary square-button" style="background-color: #01ae0d;">
+              <i class="fa-solid fa-download"></i>
+            </a>
+          
+            {% with favorite_class=post.is_favorite|yesno:"favpurple,favblue" %}
+            <a href="{% url 'toggle_favorite' 'File' post.id %}" class="btn btn-primary favorite-button square-button {{favorite_class}}">
+              <i class="fa-regular fa-star"></i>
+            </a>
+        {% endwith %}
+          </div>
+          
+      <div class="article-metadata">
+        <small class="text-muted">
+            {{ post.created_at|date:"H:i d/m/Y" }}
+        </small>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+
+
+
+<!-- Folders Section -->
+<h2 class="section-title">
+    <i class='fa fa-folder blue-color' 
+    style="margin-right: 9px; font-size: 30px;"></i>
+    <span style="font-size: 30px;">Folders</span></h2>
+<hr class="section-line">
+<div class="folder-section">
+  {% for post in folders %}
+  <article class="media content-section">
+    <div class="media-body">
+        
+    
+        <a class="article-title" href="{% url 'subfolder' post.id %}" style="text-decoration: none; color: #333; display: flex; flex-direction: column; align-items: center;">
+            <i class="fas fa-folder fa-10x" style="color: #ffc800;"></i>
+            <h4 style="margin-top: 5px;">{{ post.name }}</h4>
+          </a>
+          
+
+          <div class="button-row">
+            <form action="{% url 'delete_folder' post.pk %}" method="POST" class=" square button" style="padding: 0%; margin: 0px 0px;">
+              {% csrf_token %}
+              {% if request.user == post.user %}
+                <button type="submit" class="btn btn-danger square button " style="height: 40px">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              {% endif %}
+            </form>
+          
+            <a href="{% url 'download_folder' post.id %}" class="btn btn-primary square-button " style=" background-color: #01ae0d;
+            border: none;">
+              <i class="fa-solid fa-download"></i>
+            </a>
+          
+            {% with favorite_class=post.is_favorite|yesno:"favpurple,favblue" %}
+            <a href="{% url 'toggle_favorite' 'Folder' post.id %}" class="btn btn-primary favorite-button square-button {{favorite_class}}">
+              <i class="fa-regular fa-star"></i>
+            </a>
+        {% endwith %}
+          </div>
+          
+    </div>
+  </article>
+  {% endfor %}
+</div>
+
+{% block favourite %}
+{% endblock favourite %}
+
+{% endblock content %}
+
+{% block script %}
+{% block homescript %}
+
+{% endblock homescript %}
+{% endblock script %}

@@ -1,0 +1,34 @@
+{% extends "root/home_base.html" %} {%block favourite%} 
+{% if folderuser == request.user %}
+<div style="position: fixed; top: 20px; right: 20px">
+  <details
+    class="dropdown action-buttons"
+    style="
+      --button-background: rgb(65, 160, 255);
+      --button-color: white;
+
+      --dropdown-highlight: dodgerblue;
+      --dropdown-width: 160px;
+      --dropdown-background: rgb(0, 208, 255);
+      --dropdown-color: rgb(255, 255, 255);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* min-height: 100vh; */
+      background-color: #ffffff;
+    "
+  >
+    <summary role="button">
+      <a class="button" style="text-decoration: none">Edit</a>
+    </summary>
+    <ul>
+      <li><a href="{% url 'create_folder' %}">Create Folder</a></li>
+      <li><a href="{% url 'create_file_in_folder' parent_folder_id %}">Upload File</a></li>
+      <li>
+        <a href="{% url 'folder_upload' parent_folder_id %}">Upload Folder</a>
+      </li>
+    </ul>
+  </details>
+</div>
+{% endif %} {%endblock favourite%}

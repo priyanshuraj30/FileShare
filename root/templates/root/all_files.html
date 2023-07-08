@@ -1,0 +1,55 @@
+{% extends "root/home_base.html" %}
+{% load static %}
+
+{% block favourite %}
+<!-- <div class="dropdown action-buttons" >
+  <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Actions
+  </button>
+  <div class="dropdown-menu" aria-labelledby="actionDropdownButton">
+    <a href="{% url 'create_folder' %}" class="dropdown-item" style="background-color: #00a2ff;">Create Folder</a>
+    <a href="{% url 'all_files_create' %}" class="dropdown-item">Upload File</a>
+    <a href="{% url 'folder-upload-index' %}" class="dropdown-item">Upload Folder</a>
+  </div>
+</div> -->
+
+<div style="position: fixed; top: 20px; right: 20px;">
+<details class="dropdown action-buttons" style=" 
+  --button-background: rgb(65, 160, 255);
+  --button-color: white;
+  
+  --dropdown-highlight: dodgerblue;
+  --dropdown-width: 160px;
+  --dropdown-background: rgb(0, 208, 255);
+  --dropdown-color: rgb(255, 255, 255);
+
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+  background-color: #ffffff;
+">
+  <summary role="button">
+    <a class="button" style="text-decoration: none;">Edit</a>
+  </summary>
+  <ul>
+    <li><a href="{% url 'create_folder' %}">Create Folder</a></li>
+    <li><a href="{% url 'all_files_create' %}">Upload File</a></li>
+    <li><a href="{% url 'folder-upload-index' %}">Upload Folder</a></li>
+</ul>
+</details>
+</div>
+
+{% endblock favourite %} 
+
+{% block homescript %}
+<script>
+  $(document).ready(function () {
+    $(".favorite-button").click(function () {
+      $(this).toggleClass("clicked");
+    });
+  });
+</script>
+{% endblock homescript %}
